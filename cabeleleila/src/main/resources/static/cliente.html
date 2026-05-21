@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área do Cliente — Cabeleleila Leila</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>Área do Cliente</h1>
+      <p>Cabeleleila Leila — Agendamento online</p>
+    </div>
+    <div class="header-actions">
+      <a href="/" class="btn btn-outline btn-sm">Início</a>
+      <button type="button" id="btnSair" class="btn btn-outline btn-sm hidden">Sair</button>
+    </div>
+  </div>
+</header>
+
+<div id="toast-container" class="toast-container"></div>
+
+<main>
+  <!-- LOGIN / CADASTRO -->
+  <section id="secaoLogin" class="card">
+    <h2>Identifique-se</h2>
+    <p class="hint">Primeira vez? Cadastre-se. Já tem cadastro? Entre com seu e-mail.</p>
+
+    <nav class="tabs">
+      <button type="button" class="tab-btn active" data-panel="panel-entrar">Já sou cliente</button>
+      <button type="button" class="tab-btn" data-panel="panel-cadastro">Primeiro acesso</button>
+    </nav>
+
+    <div id="panel-entrar" class="panel active">
+      <form id="formEntrar">
+        <label for="loginEmail">E-mail cadastrado</label>
+        <input type="email" id="loginEmail" required placeholder="seu@email.com">
+        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+      </form>
+    </div>
+
+    <div id="panel-cadastro" class="panel">
+      <form id="formCadastroCliente">
+        <label for="cadNome">Nome completo</label>
+        <input type="text" id="cadNome" required>
+        <label for="cadTelefone">Telefone</label>
+        <input type="text" id="cadTelefone" required placeholder="85999998888">
+        <label for="cadEmail">E-mail</label>
+        <input type="email" id="cadEmail" required>
+        <button type="submit" class="btn btn-primary btn-block">Criar meu cadastro</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ÁREA LOGADA -->
+  <div id="secaoLogada" class="hidden">
+    <div id="clienteLogadoInfo" class="cliente-logado"></div>
+
+    <nav class="tabs">
+      <button type="button" class="tab-btn active" data-panel="panel-agendar">Agendar</button>
+      <button type="button" class="tab-btn" data-panel="panel-meus">Meus agendamentos</button>
+      <button type="button" class="tab-btn" data-panel="panel-alterar">Alterar</button>
+      <button type="button" class="tab-btn" data-panel="panel-historico">Histórico</button>
+    </nav>
+
+    <section id="panel-agendar" class="panel active">
+      <div class="card">
+        <h2>Novo agendamento</h2>
+        <div class="alert alert-info">
+          Marque <strong>um ou mais serviços</strong>. Alteração online permitida até <strong>2 dias antes</strong> do horário.
+          Com menos de 48h, ligue: <strong>(85) 3222-1000</strong>.
+        </div>
+        <form id="formAgendamento">
+          <label>Serviços</label>
+          <div id="containerServicos" class="servicos-grid"></div>
+          <p id="valorTotalPreview" class="hint" style="font-weight:700;color:#6d28d9;">Total estimado: R$ 0,00</p>
+          <label for="dataHora">Data e hora</label>
+          <input type="datetime-local" id="dataHora" required>
+          <button type="submit" class="btn btn-primary btn-block">Confirmar agendamento</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="panel-meus" class="panel">
+      <div class="card">
+        <h2>Meus agendamentos</h2>
+        <table>
+          <thead>
+            <tr><th>Serviços</th><th>Data/Hora</th><th>Total</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody id="tabelaMeus"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="panel-alterar" class="panel">
+      <div class="card">
+        <h2>Alterar agendamento</h2>
+        <div class="alert alert-warning">
+          Só é possível alterar pelo site até 2 dias antes. Depois disso, ligue <strong>(85) 3222-1000</strong>.
+        </div>
+        <table>
+          <thead>
+            <tr><th>Serviços</th><th>Data/Hora</th><th></th></tr>
+          </thead>
+          <tbody id="tabelaAlterar"></tbody>
+        </table>
+        <form id="formAlteracao" class="hidden" style="margin-top:1rem;">
+          <h3 style="margin-top:0;">Editando agendamento</h3>
+          <input type="hidden" id="editId">
+          <label for="novaDataHora">Nova data e hora</label>
+          <input type="datetime-local" id="novaDataHora" required>
+          <label>Serviços</label>
+          <div id="containerServicosAlterar" class="servicos-grid"></div>
+          <button type="submit" class="btn btn-warning btn-block">Salvar alteração</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="panel-historico" class="panel">
+      <div class="card">
+        <h2>Histórico por período</h2>
+        <p class="hint">Consulte seus agendamentos em um intervalo de datas.</p>
+        <div class="filter-row">
+          <div>
+            <label for="filtroInicio">De</label>
+            <input type="datetime-local" id="filtroInicio">
+          </div>
+          <div>
+            <label for="filtroFim">Até</label>
+            <input type="datetime-local" id="filtroFim">
+          </div>
+          <button type="button" id="btnFiltrar" class="btn btn-primary">Buscar</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Serviços</th><th>Data/Hora</th><th>Total</th><th>Status</th></tr>
+          </thead>
+          <tbody id="tabelaHistorico"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="/js/api.js"></script>
+<script src="/js/cliente.js"></script>
+</body>
+</html>

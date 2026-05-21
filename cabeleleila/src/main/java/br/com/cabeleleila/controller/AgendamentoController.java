@@ -36,6 +36,11 @@ public class AgendamentoController{
         return agendamentoService.listarPorPeriodo(inicio, fim);
     }
 
+    @GetMapping("/cliente/{clienteId}")
+    public List<Agendamento> listarPorCliente(@PathVariable UUID clienteId) {
+        return agendamentoService.listarPorCliente(clienteId);
+    }
+
     @GetMapping("/{id}")
     public Agendamento buscarPorId(@PathVariable UUID id) {
         return agendamentoService.buscarPorId(id);
@@ -44,6 +49,11 @@ public class AgendamentoController{
     @PutMapping("/{id}")
     public Agendamento alterarAgendamento(@PathVariable UUID id, @RequestBody Agendamento agendamento) {
         return agendamentoService.alterarAgendamento(id, agendamento);
+    }
+
+    @PatchMapping("/{id}/cancelar")
+    public Agendamento cancelar(@PathVariable UUID id) {
+        return agendamentoService.cancelar(id);
     }
 
     @DeleteMapping("/{id}")

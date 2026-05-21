@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface AgendamentoRepository extends JpaRepository<Agendamento, UUID> {
 
     List<Agendamento> findByDataHoraBetweenOrderByDataHoraAsc(LocalDateTime inicio, LocalDateTime fim);
+
+    List<Agendamento> findByClienteIdOrderByDataHoraDesc(UUID clienteId);
 }

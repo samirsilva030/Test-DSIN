@@ -53,11 +53,6 @@ mvn test
 - Dados iniciais de serviços para demonstração
 - Documentação (`README.md`, `INFORMACOES.txt`, pasta `entrega/`)
 
-## Entrega do edital
-
-1. Repositório Git com o projeto
-2. Pasta `entrega/` com prints das telas + vídeo
-3. Arquivo `INFORMACOES.txt` na raiz do módulo
 
 ## API principal
 

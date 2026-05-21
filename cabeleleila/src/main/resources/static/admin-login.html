@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Administrativo — Cabeleleila Leila</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>Acesso restrito</h1>
+      <p>Somente a equipe do salão</p>
+    </div>
+    <a href="/" class="btn btn-outline btn-sm">Voltar ao início</a>
+  </div>
+</header>
+
+<div id="toast-container" class="toast-container"></div>
+
+<main>
+  <div class="card" style="max-width:420px;margin:2rem auto;">
+    <h2>Login da Leila (Admin)</h2>
+    <p class="hint">Clientes não possuem acesso a esta área. Use a senha configurada para o salão.</p>
+
+    <form id="formAdminLogin">
+      <label for="senhaAdmin">Senha administrativa</label>
+      <input type="password" id="senhaAdmin" required autocomplete="current-password" placeholder="Senha do salão">
+      <button type="submit" class="btn btn-primary btn-block">Entrar na administração</button>
+    </form>
+
+    <p class="hint" style="margin-top:1rem;text-align:center;">
+      É cliente? <a href="/cliente.html">Ir para área do cliente</a>
+    </p>
+  </div>
+</main>
+
+<script src="/js/api.js"></script>
+<script>
+  if (isAdminAutenticado()) {
+    window.location.href = '/admin.html';
+  }
+
+  document.getElementById('formAdminLogin').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const senha = document.getElementById('senhaAdmin').value;
+
+    try {
+      const { ok, data } = await api('POST', '/admin/login', { senha });
+      if (ok && data.token) {
+        setAdminToken(data.token);
+        toast('Acesso autorizado.');
+        window.location.href = '/admin.html';
+      } else {
+        toast(extrairErro(data), 'error');
+      }
+    } catch (err) {
+      toast(err.message, 'error');
+    }
+  });
+</script>
+</body>
+</html>

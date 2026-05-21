@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administração — Cabeleleila Leila</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>Área Administrativa</h1>
+      <p>Gestão do salão — Cabeleleila Leila</p>
+    </div>
+    <div class="header-actions">
+      <a href="/" class="btn btn-outline btn-sm">Início</a>
+      <button type="button" id="btnSairAdmin" class="btn btn-outline btn-sm">Sair do admin</button>
+    </div>
+  </div>
+</header>
+
+<div id="toast-container" class="toast-container"></div>
+
+<main>
+  <nav class="tabs">
+    <button type="button" class="tab-btn active" data-panel="panel-clientes">Clientes</button>
+    <button type="button" class="tab-btn" data-panel="panel-servicos">Serviços</button>
+    <button type="button" class="tab-btn" data-panel="panel-agendamentos">Agendamentos</button>
+  </nav>
+
+  <section id="panel-clientes" class="panel active">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Cadastrar cliente</h2>
+        <form id="formCliente">
+          <label for="admNome">Nome</label>
+          <input type="text" id="admNome" required>
+          <label for="admTelefone">Telefone</label>
+          <input type="text" id="admTelefone" required>
+          <label for="admEmail">E-mail</label>
+          <input type="email" id="admEmail" required>
+          <button type="submit" class="btn btn-primary btn-block">Salvar cliente</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Clientes cadastrados</h2>
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th></th></tr>
+          </thead>
+          <tbody id="tabelaClientes"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-servicos" class="panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Cadastrar serviço</h2>
+        <form id="formServico">
+          <label for="admNomeServico">Nome</label>
+          <input type="text" id="admNomeServico" required>
+          <label for="admPreco">Preço (R$)</label>
+          <input type="number" id="admPreco" step="0.01" min="0.01" required>
+          <label for="admDuracao">Duração (min)</label>
+          <input type="number" id="admDuracao" min="1" required>
+          <button type="submit" class="btn btn-primary btn-block">Salvar serviço</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Serviços do salão</h2>
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>Preço</th><th>Duração</th><th></th></tr>
+          </thead>
+          <tbody id="tabelaServicos"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-agendamentos" class="panel">
+    <div class="card">
+      <h2>Todos os agendamentos</h2>
+      <div class="filter-row">
+        <div>
+          <label for="admFiltroInicio">Histórico — De</label>
+          <input type="datetime-local" id="admFiltroInicio">
+        </div>
+        <div>
+          <label for="admFiltroFim">Até</label>
+          <input type="datetime-local" id="admFiltroFim">
+        </div>
+        <div style="display:flex;gap:0.5rem;">
+          <button type="button" id="btnHistAdmin" class="btn btn-primary btn-sm">Filtrar período</button>
+          <button type="button" id="btnListarTodos" class="btn btn-secondary btn-sm">Ver todos</button>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Serviços</th>
+            <th>Data/Hora</th>
+            <th>Status</th>
+            <th>Alteração</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabelaAgendamentos"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script src="/js/api.js"></script>
+<script>
+  if (!exigirAdmin()) { /* redireciona para admin-login */ }
+</script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

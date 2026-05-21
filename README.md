@@ -12,20 +12,7 @@ Sistema de agendamento online desenvolvido para a avaliação técnica DSIN.
 | Testes | JUnit 5, Mockito, Spring MockMvc |
 | Arquitetura | MVC em camadas (Controller → Service → Repository) |
 
-## Como executar
-
-```bash
-cd cabeleleila/cabeleleila
-mvn spring-boot:run
-```
-
 Acesse: **http://localhost:8080**
-
-### Rodar testes
-
-```bash
-mvn test
-```
 
 ## Áreas do sistema
 
@@ -51,7 +38,6 @@ mvn test
 - Validações backend (Jakarta Validation) e frontend
 - **Testes unitários e de integração**
 - Dados iniciais de serviços para demonstração
-- Documentação (`README.md`, `INFORMACOES.txt`, pasta `entrega/`)
 
 
 ## API principal

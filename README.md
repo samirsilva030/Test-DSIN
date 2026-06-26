@@ -1,6 +1,6 @@
 # Cabeleleila Leila — Salão de Beleiza
 
-Sistema de agendamento online desenvolvido para a avaliação técnica DSIN.
+Sistema de agendamento online
 
 ## Tecnologias
 

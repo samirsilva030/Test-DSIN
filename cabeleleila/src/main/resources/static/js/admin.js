@@ -150,8 +150,13 @@ async function salvarCliente(e) {
   const payload = {
     nome: document.getElementById('admNome').value.trim(),
     telefone: document.getElementById('admTelefone').value.trim(),
-    email: document.getElementById('admEmail').value.trim(),
+    email: document.getElementById('admEmail').value.trim().toLowerCase(),
   };
+
+  if (!payload.nome || !validarTelefone(payload.telefone) || !validarEmail(payload.email)) {
+    toast('Preencha nome, telefone (10–11 dígitos) e e-mail válidos.', 'error');
+    return;
+  }
 
   const { ok, data } = await api('POST', '/clientes', payload);
   if (ok) {
@@ -170,6 +175,11 @@ async function salvarServico(e) {
     preco: parseFloat(document.getElementById('admPreco').value),
     duracao: parseInt(document.getElementById('admDuracao').value, 10),
   };
+
+  if (!payload.nome || !(payload.preco > 0) || !(payload.duracao > 0)) {
+    toast('Informe nome, preço e duração válidos.', 'error');
+    return;
+  }
 
   const { ok, data } = await api('POST', '/servicos', payload);
   if (ok) {

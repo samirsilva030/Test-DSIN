@@ -10,13 +10,14 @@ function servicosSelecionados(containerId) {
 }
 
 function atualizarTotalPreview() {
-  const el = document.getElementById('valorTotalPreview');
-  if (!el) return;
+  const elValor = document.getElementById('valorTotalPreview');
+  const elDuracao = document.getElementById('duracaoTotalPreview');
   const ids = servicosSelecionados('containerServicos').map((s) => s.id);
-  const total = servicos
-    .filter((s) => ids.includes(String(s.id)))
-    .reduce((acc, s) => acc + Number(s.preco), 0);
-  el.textContent = `Total estimado: R$ ${total.toFixed(2)}`;
+  const selecionados = servicos.filter((s) => ids.includes(String(s.id)));
+  const total = selecionados.reduce((acc, s) => acc + Number(s.preco), 0);
+  const duracao = selecionados.reduce((acc, s) => acc + Number(s.duracao), 0);
+  if (elValor) elValor.textContent = `Total estimado: R$ ${total.toFixed(2)}`;
+  if (elDuracao) elDuracao.textContent = `Duração estimada: ${duracao} min`;
 }
 
 function renderizarServicos(containerId, selecionados = []) {

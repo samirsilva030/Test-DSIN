@@ -1,0 +1,114 @@
+Cabeleleila Leila - Salão de Beleiza
+=====================================
+Avaliação Técnica DSIN - Teste Prático
+
+AUTOR E REPOSITÓRIO
+-------------------
+[Preencha com seu nome e o link do GitHub/GitLab/Bitbucket antes de enviar]
+
+TECNOLOGIAS UTILIZADAS
+----------------------
+Backend:
+  - Java 21
+  - Spring Boot 3.5 (Web, Data JPA, Validation)
+  - H2 Database (memória)
+  - Lombok
+  - Arquitetura em camadas: Controller / Service / Repository (padrão MVC)
+  - Detalhes em ARQUITETURA.md e CHECKLIST_EDITAL.md
+
+Frontend:
+  - HTML5, CSS3, JavaScript puro (sem framework)
+  - Consumo da API REST via Fetch API
+  - Separação em páginas: portal, cliente, admin-login, admin
+
+Testes:
+  - JUnit 5
+  - Mockito (testes unitários de regras de negócio)
+  - Spring Boot Test + MockMvc (testes de integração da API)
+
+COMO RODAR O PROJETO
+--------------------
+Pré-requisitos: JDK 21 e Maven 3.8+
+
+1. Abra o terminal na pasta do módulo:
+   cd cabeleleila/cabeleleila
+
+2. Execute a aplicação:
+   mvn spring-boot:run
+
+3. Acesse no navegador (obrigatório usar esta URL):
+   http://localhost:8080
+
+4. Para executar os testes automatizados:
+   mvn test
+
+IMPORTANTE: não abra os arquivos .html diretamente pelo Explorer (file://).
+O frontend precisa do servidor Spring na porta 8080 para comunicar com a API.
+
+CREDENCIAIS E ACESSOS
+---------------------
+Área do cliente: http://localhost:8080/cliente.html
+Área administrativa: http://localhost:8080/admin-login.html
+Senha admin (padrão): leila2026
+Altere em: src/main/resources/application.properties
+  - app.admin.senha
+  - app.admin.token
+
+Console H2 (opcional): http://localhost:8080/h2-console
+  JDBC URL: jdbc:h2:mem:testdb
+  Usuário: sa | Senha: (vazia)
+
+FUNCIONALIDADES — NÍVEL FUNDAMENTAL
+-----------------------------------
+[X] Agendamento de um ou mais serviços no mesmo horário
+[X] Alteração pelo sistema até 2 dias antes do agendamento
+[X] Bloqueio de alteração com menos de 2 dias (orientação para ligar ao salão)
+[X] Histórico de agendamentos por período (data início e fim)
+[X] Interface para o cliente final (área do cliente)
+[X] Interface administrativa separada (área da Leila)
+
+FUNCIONALIDADES — NÍVEL PLUS / DIFERENCIAIS
+-------------------------------------------
+[X] Cálculo automático do valor total do agendamento
+[X] Exibição da duração total estimada dos serviços selecionados
+[X] Telefone do salão na mensagem de bloqueio (configurável em application.properties)
+[X] Cancelamento de agendamento pelo cliente (status CANCELADO)
+[X] Validação de e-mail duplicado no cadastro
+[X] Validações de entrada no backend (@Valid, regras no Service)
+[X] Validações no frontend (e-mail, telefone, datas)
+[X] Proteção da área admin com login e token
+[X] Proteção de exclusões na API (somente admin)
+[X] Serviços pré-cadastrados ao iniciar o sistema
+[X] Testes unitários (AgendamentoService, ClienteService, ServicoService)
+[X] Testes de integração (API de agendamento e login admin)
+[X] Documentação README + INFORMACOES + pasta entrega/
+
+ESTRUTURA DE TELAS
+------------------
+/ ...................... Portal (escolha cliente ou admin)
+/cliente.html .......... Área do cliente
+/admin-login.html ...... Login administrativo
+/admin.html ............ Painel da Leila
+
+ROTEIRO SUGERIDO PARA O VÍDEO
+-----------------------------
+1. Subir o sistema (mvn spring-boot:run)
+2. Admin: login → cadastrar cliente → ver agendamentos
+3. Cliente: cadastro → agendar 2 serviços → mostrar total
+4. Cliente: alterar data (agendamento com +3 dias)
+5. Cliente: histórico por período
+6. Cliente: tentar alterar agendamento em menos de 2 dias → bloqueio
+7. Rodar mvn test no terminal (opcional, reforça qualidade)
+
+ENTREGA DO EDITAL
+-----------------
+1. Link do repositório Git (ou ZIP)
+2. Pasta entrega/ com prints das telas e vídeo (ver entrega/LEIA-ME.txt)
+3. Este arquivo INFORMACOES.txt
+
+OBSERVAÇÕES FINAIS
+------------------
+- A regra dos 2 dias é validada no backend (AgendamentoService), não apenas na interface.
+- O cliente identifica-se por e-mail; a sessão fica no localStorage do navegador.
+- A sessão admin usa sessionStorage e token enviado no header X-Admin-Auth.
+- Em produção recomenda-se: banco persistente (PostgreSQL), HTTPS, hash de senha e autenticação JWT.

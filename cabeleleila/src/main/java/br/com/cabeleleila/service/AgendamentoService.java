@@ -1,5 +1,6 @@
 package br.com.cabeleleila.service;
 
+import br.com.cabeleleila.config.SalaoProperties;
 import br.com.cabeleleila.model.Agendamento;
 import br.com.cabeleleila.model.Cliente;
 import br.com.cabeleleila.model.Servico;
@@ -19,14 +20,17 @@ public class AgendamentoService {
     private final AgendamentoRepository agendamentoRepository;
     private final ClienteRepository clienteRepository;
     private final ServicoRepository servicoRepository;
+    private final SalaoProperties salaoProperties;
 
     public AgendamentoService(
             AgendamentoRepository agendamentoRepository,
             ClienteRepository clienteRepository,
-            ServicoRepository servicoRepository) {
+            ServicoRepository servicoRepository,
+            SalaoProperties salaoProperties) {
         this.agendamentoRepository = agendamentoRepository;
         this.clienteRepository = clienteRepository;
         this.servicoRepository = servicoRepository;
+        this.salaoProperties = salaoProperties;
     }
 
     public Agendamento salvar(Agendamento agendamento) {
@@ -115,7 +119,8 @@ public class AgendamentoService {
         LocalDateTime agora = LocalDateTime.now();
         if (dataAgendada.minusDays(2).isBefore(agora)) {
             throw new IllegalStateException(
-                    "Alterações só podem ser feitas até 2 dias antes do agendamento. Entre em contato por telefone."
+                    "Alterações só podem ser feitas até 2 dias antes do agendamento. "
+                            + "Entre em contato por telefone: " + salaoProperties.getTelefone()
             );
         }
     }

@@ -1,5 +1,6 @@
 package br.com.cabeleleila.service;
 
+import br.com.cabeleleila.config.SalaoProperties;
 import br.com.cabeleleila.model.Agendamento;
 import br.com.cabeleleila.model.Cliente;
 import br.com.cabeleleila.model.Servico;
@@ -32,6 +33,9 @@ class AgendamentoServiceTest {
     @Mock
     private ServicoRepository servicoRepository;
 
+    @Mock
+    private SalaoProperties salaoProperties;
+
     @InjectMocks
     private AgendamentoService agendamentoService;
 
@@ -42,6 +46,7 @@ class AgendamentoServiceTest {
 
     @BeforeEach
     void setUp() {
+        when(salaoProperties.getTelefone()).thenReturn("(85) 3222-1000");
         clienteId = UUID.randomUUID();
         servicoId = UUID.randomUUID();
         cliente = new Cliente(clienteId, "Maria", "85999998888", "maria@test.com");
@@ -131,6 +136,14 @@ class AgendamentoServiceTest {
         Agendamento cancelado = agendamentoService.cancelar(agId);
 
         assertEquals("CANCELADO", cancelado.getStatus());
+    }
+
+    @Test
+    void listarPorPeriodo_deveRejeitarFimAntesDoInicio() {
+        LocalDateTime inicio = LocalDateTime.now().plusDays(5);
+        LocalDateTime fim = LocalDateTime.now().plusDays(2);
+
+        assertThrows(IllegalArgumentException.class, () -> agendamentoService.listarPorPeriodo(inicio, fim));
     }
 
     private Agendamento agendamentoValido() {

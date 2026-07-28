@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -68,6 +69,38 @@ class AgendamentoControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("AGENDADO"))
                 .andExpect(jsonPath("$.valorTotal").isNumber());
+    }
+
+    @Test
+    void alterar_deveBloquearComMenosDeDoisDias() throws Exception {
+        Cliente cliente = clienteRepository.save(new Cliente(null, "Teste", "85999990000", "bloqueio@dsin.com"));
+        var servico = servicoRepository.findAll().stream().findFirst().orElseThrow();
+
+        String criar = objectMapper.writeValueAsString(Map.of(
+                "dataHora", LocalDateTime.now().plusDays(1).withNano(0).toString(),
+                "cliente", Map.of("id", cliente.getId().toString()),
+                "servicos", List.of(Map.of("id", servico.getId().toString()))
+        ));
+
+        String corpo = mockMvc.perform(post("/agendamentos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(criar))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        String id = objectMapper.readTree(corpo).get("id").asText();
+
+        String alterar = objectMapper.writeValueAsString(Map.of(
+                "dataHora", LocalDateTime.now().plusDays(3).withNano(0).toString()
+        ));
+
+        mockMvc.perform(put("/agendamentos/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(alterar))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.erro", containsString("2 dias")));
     }
 
     @Test

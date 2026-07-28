@@ -1,0 +1,23 @@
+Pasta de entrega — Avaliação DSIN
+=================================
+
+Coloque aqui os materiais solicitados no edital:
+
+1. PRINTS (screenshots)
+   - index.png — portal inicial
+   - cliente-cadastro.png — primeiro acesso
+   - cliente-agendar.png — agendamento com vários serviços
+   - cliente-alterar.png — alteração de horário
+   - cliente-historico.png — filtro por período
+   - cliente-bloqueio.png — tentativa com menos de 2 dias (mensagem + telefone)
+   - admin-login.png — tela de senha
+   - admin-painel.png — gestão de clientes/serviços/agendamentos
+
+2. VÍDEO
+   - demo.mp4 (ou link no YouTube/Drive)
+   - Mostre o fluxo completo em 3–5 minutos
+
+3. Dica para gravar
+   - Terminal: mvn spring-boot:run
+   - Navegador: http://localhost:8080
+   - Senha admin: leila2026
